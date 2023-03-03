@@ -9,12 +9,10 @@ steps:
   commands:
     - apk add --update yarn
     - cd ./frontend && yarn install --quiet; yarn build --quiet
-    - cd .. && cp -rv ./frontend ./nginx/
 
 - name: build-server
   image: plugins/docker
   settings:
-    context: ./server
     dockerfile : ./server/Dockerfile
     repo: kinnairdclan/youtube-dl-web-server
     username:
@@ -24,9 +22,7 @@ steps:
 
 - name: build-nginx
   image: plugins/docker
-  context: ./nginx
   settings:
-    context: ./nginx
     dockerfile: ./nginx/Dockerfile.nossl
     repo: kinnairdclan/youtube-dl-web-nginx
     username:
