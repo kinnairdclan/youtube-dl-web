@@ -1,0 +1,32 @@
+kind: pipeline
+name: default
+
+steps:
+- name: node-build-frontend
+  image: node:19-alpine
+  settings:
+    repo: kinnairdclan/youtube-dl-web
+  commands:
+    - apk add --update yarn
+    - cd ./frontend && yarn install --quiet; yarn build --quiet
+
+- name: build-server
+  image: plugins/docker
+  settings:
+    dockerfile : ./server/Dockerfile
+    context: ./server/
+    repo: kinnairdclan/youtube-dl-web-server
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_access_token
+
+- name: build-nginx
+  image: plugins/docker
+  settings:
+    dockerfile: ./nginx/Dockerfile.nossl
+    repo: kinnairdclan/youtube-dl-web-nginx
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_access_token
