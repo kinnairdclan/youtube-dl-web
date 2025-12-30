@@ -26,7 +26,7 @@ RUN chown -R user:user .
 # install yt-dlp and run uvicorn as nonroot
 USER user
 
-RUN pip3 --disable-pip-version-check --no-warn-script-location --no-cache-dir install -r /tmp/requirements.txt
+RUN pip3 --disable-pip-version-check --no-cache-dir install --no-warn-script-location -r /tmp/requirements.txt
 
 RUN rm -v /tmp/requirements.txt
 RUN pip3 --disable-pip-version-check install -U yt-dlp
