@@ -1,6 +1,8 @@
 # PRODUCTION DOCKERFILE
 FROM python:3.10-slim
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Bring in Deno javascript runtime for yt-dlp
 COPY --from=denoland/deno:bin-2.6.3 /deno /usr/local/bin/deno
 
