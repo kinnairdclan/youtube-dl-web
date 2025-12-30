@@ -16,14 +16,14 @@ RUN useradd user -m -s /usr/sbin/nologin
 WORKDIR /home/user/app
 COPY ./src ./
 
-# install py deps
+# prepare py deps
 COPY ./requirements.txt /tmp/requirements.txt
 RUN chown user:user /tmp/requirements.txt
 
 # fix ownership of stuff inside application folder
 RUN chown -R user:user .
 
-# install yt-dlp and run uvicorn as nonroot
+# install py dependencies, yt-dlp and run uvicorn as nonroot
 USER user
 
 RUN pip3 --disable-pip-version-check --no-cache-dir install --no-warn-script-location -r /tmp/requirements.txt
