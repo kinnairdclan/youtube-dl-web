@@ -28,6 +28,6 @@ USER user
 
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/requirements.txt
 RUN rm -v /tmp/requirements.txt
-RUN pip3 install -U yt-dlp
+RUN pip3 --disable-pip-version-check --no-warn-script-location install -U yt-dlp
 
 CMD [ "python", "-m", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "4000", "--no-server-header", "--workers", "8" ]
