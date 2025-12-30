@@ -22,10 +22,11 @@ COPY ./src ./
 # fix ownership of stuff inside application folder
 RUN chown -R user:user .
 
+# install yt-dlp and run uvicorn as nonroot
+USER user
+
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/requirements.txt
 RUN rm -v /tmp/requirements.txt
 RUN pip3 install -U yt-dlp
 
-# run uvicorn as nonroot
-USER user
 CMD [ "python", "-m", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "4000", "--no-server-header", "--workers", "8" ]
