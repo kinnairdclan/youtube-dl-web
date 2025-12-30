@@ -1,6 +1,9 @@
 # PRODUCTION DOCKERFILE
 FROM python:3.10-slim
 
+# Bring in Deno javascript runtime for yt-dlp
+COPY --from=denoland/deno:bin-2.6.3 /deno /usr/local/bin/deno
+
 # install pkg deps
 RUN apt update && apt install -y ffmpeg libmagic-dev gcc g++
 
